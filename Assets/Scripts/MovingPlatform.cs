@@ -5,6 +5,7 @@ public class MovingPlatform : MonoBehaviour
 {
     Vector2 spriteSize;
     int direct = 1;
+    public float speed = 4;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class MovingPlatform : MonoBehaviour
             direct = -direct;
         }
 
-        transform.Translate(Vector2.right * 6 * TimeControl.DeltaTime * direct);
+        transform.Translate(Vector2.right * speed * TimeControl.DeltaTime * direct);
     }
 
 
