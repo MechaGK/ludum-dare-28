@@ -4,6 +4,14 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour
 {
     public Transform player;
+    public static CameraFollow Main
+    {
+        get
+        {
+            return Camera.main.GetComponent<CameraFollow>();
+        }
+    }
+
     Rect allowedArea;
 
     void Start()
@@ -22,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 newPos = player.position;
 
         newPos.x = Mathf.Clamp(newPos.x, allowedArea.x, allowedArea.width);
-        newPos.y = Mathf.Clamp(newPos.y, allowedArea.height, allowedArea.y);
+        newPos.y = Mathf.Clamp(newPos.y, allowedArea.y, allowedArea.height);
         newPos.z = -10;
 
         transform.position = newPos;
