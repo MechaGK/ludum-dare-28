@@ -54,5 +54,23 @@ TextureImporter:
         height: 7
       alignment: 0
       pivot: {x: .5, y: .5}
+    - name: Block
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 0
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Viser
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1
+        height: 6
+      alignment: 9
+      pivot: {x: .5, y: .142800003}
   spritePackingTag: 
   userData: 
