@@ -54,7 +54,7 @@ TextureImporter:
         height: 7
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Block
+    - name: Floor
       rect:
         serializedVersion: 2
         x: 12
@@ -77,6 +77,15 @@ TextureImporter:
         serializedVersion: 2
         x: 8
         y: 0
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Wall
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 4
         width: 4
         height: 4
       alignment: 0
