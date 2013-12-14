@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     {
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         spriteSize = new Vector2(sprite.bounds.max.x * 2, sprite.bounds.max.y * 2);
+        Camera.main.GetComponent<CameraFollow>().player = transform;
     }
 
     void Update()
@@ -28,7 +29,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
-            rigidbody2D.AddForce(Vector2.up * 25);
+            rigidbody2D.AddForce(Vector2.up * 30);
         }
 
         if (Physics2D.Linecast(pos, pos - Vector2.up * ((spriteSize.y / 2) + 0.1f), 1 << LayerMask.NameToLayer("Solid")))
@@ -46,9 +47,9 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        float timeModifier = Mathf.Abs(h) * (1f / 50f);
+        float timeModifier = Mathf.Abs(h) * (1f / 45f);
         timeModifier += 1 / 150f;
-        timeModifier += grounded ? 0 : 1f / 25f;
+        timeModifier += grounded ? 0 : 1f / 20f;
 
         TimeControl.timeModifier = timeModifier;
 

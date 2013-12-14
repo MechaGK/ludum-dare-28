@@ -21,7 +21,7 @@ public class MovingPlatform : MonoBehaviour
             direct = -direct;
         }
 
-        transform.Translate(Vector2.right * 12 * TimeControl.DeltaTime * direct);
+        transform.Translate(Vector2.right * 6 * TimeControl.DeltaTime * direct);
     }
 
 
