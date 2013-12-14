@@ -22,24 +22,27 @@ public class PlayerControl : MonoBehaviour
         Debug.DrawLine(pos, pos + (Vector2.right * (spriteSize.x / 2) * Mathf.Sign(h)));
         if (!Physics2D.Linecast(pos, pos + (Vector2.right * ((spriteSize.x / 2) + 0.02f) * Mathf.Sign(h)), 1 << LayerMask.NameToLayer("Solid")))
         {
-            transform.Translate(Vector2.right * h * speed * Time.deltaTime);
+            rigidbody2D.velocity = new Vector3(h * speed * Time.deltaTime, rigidbody2D.velocity.y, 0);
         }
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
-            print("Jump!");
             jump = true;
             rigidbody2D.AddForce(Vector2.up * 25);
         }
 
-        if (!Physics2D.Linecast(pos, pos - Vector2.up * ((spriteSize.y / 2) + 0.1f), 1 << LayerMask.NameToLayer("Solid")))
+        if (Physics2D.Linecast(pos, pos - Vector2.up * ((spriteSize.y / 2) + 0.1f), 1 << LayerMask.NameToLayer("Solid")))
         {
-            grounded = false;
-            print("not grounded!");
+            grounded = true;
+        }
+        else if (Physics2D.Linecast(pos, pos - Vector2.up * ((spriteSize.y / 2) + 0.1f), 1 << LayerMask.NameToLayer("MovingSolid")))
+        {
+            grounded = true;
+            
         }
         else
         {
-            grounded = true;
+            grounded = false;
         }
 
 
@@ -48,5 +51,7 @@ public class PlayerControl : MonoBehaviour
         timeModifier += grounded ? 0 : 1f / 25f;
 
         TimeControl.timeModifier = timeModifier;
+
+        rigidbody2D.AddForce(Vector2.zero);
     }
 }
