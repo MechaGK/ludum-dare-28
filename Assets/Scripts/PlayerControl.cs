@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
     bool jump = false;
     bool grounded;
     Vector2 spriteSize;
+    public GameObject levelEnd;
 
     void Start()
     {
@@ -54,5 +55,16 @@ public class PlayerControl : MonoBehaviour
         TimeControl.timeModifier = timeModifier;
 
         rigidbody2D.AddForce(Vector2.zero);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Goal"))
+        {
+            CameraFollow.Main.player = col.transform;
+            TimeControl.timeModifier = 1;
+            Instantiate(levelEnd, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

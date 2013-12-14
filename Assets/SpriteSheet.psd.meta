@@ -90,5 +90,14 @@ TextureImporter:
         height: 4
       alignment: 0
       pivot: {x: .5, y: .5}
+    - name: Goal
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 11
+        width: 3
+        height: 5
+      alignment: 0
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 
