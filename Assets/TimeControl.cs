@@ -14,8 +14,13 @@ public class TimeControl : MonoBehaviour
         }
     }
 
+    float time;
+
     void Update()
     {
         deltaTime = Time.deltaTime * timeModifier;
+
+        time += deltaTime;
+        //print(time);
     }
 }
