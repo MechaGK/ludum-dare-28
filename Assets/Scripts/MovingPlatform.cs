@@ -17,7 +17,7 @@ public class MovingPlatform : MonoBehaviour
     {
         Vector2 pos = transform.position;
 
-        if (Physics2D.Linecast(pos, pos + (Vector2.right * (spriteSize.x) * direct), 1 << LayerMask.NameToLayer("Solid")))
+        if (Physics2D.Linecast(pos, pos + (Vector2.right * (spriteSize.x) * direct), (1 << LayerMask.NameToLayer("Floor")) | (1 << LayerMask.NameToLayer("Walls"))))
         {
             direct = -direct;
         }
