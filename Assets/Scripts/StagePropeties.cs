@@ -5,6 +5,7 @@ public class StagePropeties : MonoBehaviour
 {
     public static StagePropeties BLAH;
     public Rect stageDimensions;    //X and Y is left, bottom
+    public Transform spawn;
 
     public Rect StageDimensions
     {
