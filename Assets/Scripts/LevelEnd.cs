@@ -18,7 +18,6 @@ public class LevelEnd : MonoBehaviour
     IEnumerator Effects()
     {
         yield return new WaitForSeconds(1.5f);
-
         system.emissionRate = 75;
         system.startSpeed = 1f;
         while (transform.position.y < StagePropeties.BLAH.stageDimensions.y + StagePropeties.BLAH.stageDimensions.height)
