@@ -19,7 +19,7 @@ public class Spawing : MonoBehaviour
         {
             if (system.startSpeed > -12f && !stopped)
             {
-                system.startSpeed -= Time.deltaTime * 2;
+                system.startSpeed -= Time.deltaTime * 3;
                 system.emissionRate += Time.deltaTime;
             }
             else
