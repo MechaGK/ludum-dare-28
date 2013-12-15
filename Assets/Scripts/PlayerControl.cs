@@ -11,12 +11,16 @@ public class PlayerControl : MonoBehaviour
     Vector3 spawn;
     public GameObject deathTrail;
     bool controlable = true;
+    bool respawing = false;
+    public float timeSinceSpawn = 0;
 
     void Start()
     {
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         spriteSize = new Vector2(sprite.bounds.max.x * 2, sprite.bounds.max.y * 2);
         spawn = StagePropeties.BLAH.spawn.position;
+
+        Camera.main.transform.FindChild("Watch").GetComponent<Watch>().player = this;
     }
 
     void Update()
@@ -65,6 +69,13 @@ public class PlayerControl : MonoBehaviour
             {
                 StartCoroutine(Die());
             }
+
+            timeSinceSpawn += TimeControl.DeltaTime;
+
+            if (timeSinceSpawn >= 0f)
+            {
+                Die();
+            }
         }
     }
 
@@ -81,23 +92,33 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator Die()
     {
-        TimeControl.timeModifier = 1;
-        float timer = 0;
-        controlable = false;
-        GameObject effect = Instantiate(deathTrail, transform.position, Quaternion.identity) as GameObject;
-        CameraFollow.Main.player = effect.transform;
-
-        while (timer <= 1f)
+        if (!respawing)
         {
-            effect.transform.position = Vector3.Lerp(transform.position, spawn, timer);
-            timer += Time.deltaTime / 2;
-            yield return new WaitForEndOfFrame();
-        }
+            respawing = true;
 
-        transform.position = spawn;
-        effect.GetComponent<ParticleSystem>().Stop();
-        CameraFollow.Main.player = transform;
-        Destroy(effect,5);
-        controlable = true;
+            TimeControl.timeModifier = 1;
+            float timer = 0;
+            controlable = false;
+            GameObject effect = Instantiate(deathTrail, transform.position, Quaternion.identity) as GameObject;
+            CameraFollow.Main.player = effect.transform;
+
+            while (timer <= 1f)
+            {
+                effect.transform.position = Vector3.Lerp(transform.position, spawn, timer);
+                timer += Time.deltaTime / 2;
+                timeSinceSpawn += TimeControl.DeltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            transform.position = spawn;
+            effect.GetComponent<ParticleSystem>().Stop();
+            CameraFollow.Main.player = transform;
+            Destroy(effect, 5);
+            controlable = true;
+            timeSinceSpawn = 0f;
+            TimeControl.timeModifier = 0f;
+
+            respawing = false;
+        }
     }
 }
