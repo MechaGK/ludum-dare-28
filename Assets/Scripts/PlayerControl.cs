@@ -16,14 +16,19 @@ public class PlayerControl : MonoBehaviour
     float jumpTimer = 0;
     float h;
     int ticks;
+    private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer _spriteRenderer;
 
     void Start()
     {
-        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        
+        Sprite sprite = _spriteRenderer.sprite;
         spriteSize = new Vector2(sprite.bounds.max.x, sprite.bounds.max.y);
-        spawn = StagePropeties.BLAH.spawn.position;
+        spawn = StagePropeties.Current.spawn.position;
 
-        Camera.main.transform.FindChild("Watch").GetComponent<Watch>().player = this;
+        Camera.main.transform.Find("Watch").GetComponent<Watch>().player = this;
     }
 
     void Update()
@@ -50,9 +55,9 @@ public class PlayerControl : MonoBehaviour
 
             TimeControl.timeModifier = timeModifier;
 
-            rigidbody2D.AddForce(Vector2.zero);
+            GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
 
-            if (transform.position.y < StagePropeties.BLAH.stageDimensions.y)
+            if (transform.position.y < StagePropeties.Current.stageDimensions.y)
             {
                 StartCoroutine(Die());
             }
@@ -75,10 +80,10 @@ public class PlayerControl : MonoBehaviour
             Vector2 pos = transform.position;
 
             if (!Physics2D.OverlapArea(pos + Vector2.up * (spriteSize.y - 0.001f),
-                pos + (Vector2.right * (spriteSize.x + 0.02f) * Mathf.Sign(h)) - Vector2.up * (spriteSize.y - 0.001f),
+                pos + (Vector2.right * ((spriteSize.x + 0.02f) * Mathf.Sign(h))) - Vector2.up * (spriteSize.y - 0.001f),
                 (1 << LayerMask.NameToLayer("Platforms")) | (1 << LayerMask.NameToLayer("Wall"))))
             {
-                rigidbody2D.velocity = new Vector3(h * speed * Time.deltaTime, rigidbody2D.velocity.y, 0);
+                _rigidbody2D.velocity = new Vector3(h * speed * Time.deltaTime, _rigidbody2D.velocity.y, 0);
             }
 
             if (Input.GetButton("Jump"))
@@ -86,13 +91,13 @@ public class PlayerControl : MonoBehaviour
                 if (grounded)
                 {
                     jump = true;
-                    rigidbody2D.AddForce(Vector2.up * 24);
+                    _rigidbody2D.AddForce(Vector2.up * 24);
                     jumpTimer = 0;
                     ticks = 0;
                 }
                 else if (jump && ticks < 6)
                 {
-                    rigidbody2D.AddForce(Vector2.up * 3.5f);
+                    _rigidbody2D.AddForce(Vector2.up * 3.5f);
                     ticks += 1;
                 }
             }
@@ -120,7 +125,7 @@ public class PlayerControl : MonoBehaviour
         {
             respawing = true;
 
-            GetComponent<SpriteRenderer>().enabled = false;
+            _spriteRenderer.enabled = false;
             TimeControl.timeModifier = 1;
             float timer = 0;
             controlable = false;
@@ -142,7 +147,7 @@ public class PlayerControl : MonoBehaviour
             controlable = true;
             timeSinceSpawn = 0f;
             TimeControl.timeModifier = 0f;
-            GetComponent<SpriteRenderer>().enabled = true;
+            _spriteRenderer.enabled = true;
 
             respawing = false;
         }

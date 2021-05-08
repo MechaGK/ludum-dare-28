@@ -16,13 +16,13 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        Rect StageDim = StagePropeties.BLAH.StageDimensions;
+        Rect StageDim = StagePropeties.Current.StageDimensions;
 
         allowedArea = new Rect(
-            StageDim.x + camera.orthographicSize * (Screen.width / Screen.height),
-            StageDim.y + camera.orthographicSize,
-            StageDim.x + StageDim.width - (camera.orthographicSize * (Screen.width / Screen.height)),
-            StageDim.y + StageDim.height - (camera.orthographicSize * (Screen.width / Screen.height)));
+            StageDim.x + GetComponent<Camera>().orthographicSize * (Screen.width / Screen.height),
+            StageDim.y + GetComponent<Camera>().orthographicSize,
+            StageDim.x + StageDim.width - (GetComponent<Camera>().orthographicSize * (Screen.width / Screen.height)),
+            StageDim.y + StageDim.height - (GetComponent<Camera>().orthographicSize * (Screen.width / Screen.height)));
     }
 
     void Update()

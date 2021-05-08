@@ -20,7 +20,7 @@ public class LevelEnd : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         system.emissionRate = 75;
         system.startSpeed = 1f;
-        while (transform.position.y < StagePropeties.BLAH.stageDimensions.y + StagePropeties.BLAH.stageDimensions.height)
+        while (transform.position.y < StagePropeties.Current.stageDimensions.y + StagePropeties.Current.stageDimensions.height)
         {
             transform.Translate(Vector3.up * 10 * Time.deltaTime);
             yield return new WaitForEndOfFrame();

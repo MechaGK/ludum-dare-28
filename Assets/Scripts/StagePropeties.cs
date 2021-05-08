@@ -3,20 +3,15 @@ using System.Collections;
 
 public class StagePropeties : MonoBehaviour
 {
-    public static StagePropeties BLAH;
+    public static StagePropeties Current;
     public Rect stageDimensions;    //X and Y is left, bottom
     public Transform spawn;
+    public new Camera camera;
 
-    public Rect StageDimensions
-    {
-        get
-        {
-            return stageDimensions;
-        }
-    }
+    public Rect StageDimensions => stageDimensions;
 
-    void Awake()
+    private void Awake()
     {
-        BLAH = this;
+        Current = this;
     }
 }
